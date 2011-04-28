@@ -1,4 +1,33 @@
 
 The goal is to build a SSL-VPN bridged private Cloud in one step.
 
+Prerequisites:
+- puppet-common: https://github.com/duritong/puppet-common
+- puppet-bridge-utils: https://github.com/duritong/puppet-bridge-utils 
+
+Steps:
+
+1. Git clone
+git clone git://github.com/hsunsmile/inters-cloud.git 
+
+2. Add dependencies ( Maybe switch to git-submodules later )
+cd inters-cloud/share/upload/puppet/modules/
+git clone https://github.com/duritong/puppet-common
+git clone https://github.com/duritong/puppet-bridge-utils
+mv puppet-common common
+mv puppet-bridge-utils birdge-utils
+
+3. Make your own settings
+cd ../../../
+vim settings.sh
+vim ec2-env.sh
+
+4. Create your own SSL-VPN based Cloud
 ./create-my-cloud.sh
+
+5. Login to your cloud
+interssh inters-ec2-host1
+
+6. Stop your Cloud
+./stop-my-cloud.sh -a -t
+
