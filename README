@@ -26,6 +26,11 @@ vim ec2-env.sh
 ./create-my-cloud.sh
 
 5. Login to your cloud
+cat <<EOF >> ~/.bashrc
+alias  interssh="ssh -F ~/.ssh/config_inters"
+alias  interscp="scp -F ~/.ssh/config_inters"
+EOF
+
 interssh inters-ec2-host1
 
 6. Stop your Cloud
