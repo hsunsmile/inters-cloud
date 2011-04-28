@@ -1,0 +1,14 @@
+MONGO_HOST="127.0.0.1"
+name=""
+
+[ ! -z "$1" ] && MONGO_HOST="$1"
+[ ! -z "$2" ] && name="$2"
+
+files=`mongofiles --host $MONGO_HOST list | grep -o "$name/[1-9a-z/]*"`;
+echo $files
+
+for file in $files
+do 
+  mongofiles --host $MONGO_HOST get $file; 
+done
+

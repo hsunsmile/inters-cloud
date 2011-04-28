@@ -1,0 +1,4 @@
+
+The goal is to build a SSL-VPN bridged private Cloud in one step.
+
+./create-my-cloud.sh

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+vpn_netip="10.0.0."
+vpn_hostip=`hostname -s | grep -o "[0-9]\{1,9\}$"`
+vpn_hostip=$(($vpn_hostip+1))
+
+ifconfig $INTERFACE "$vpn_netip$vpn_hostip"
