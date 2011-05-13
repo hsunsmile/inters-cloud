@@ -34,11 +34,20 @@ class mongodb {
 		unless => "apt-key list | grep 10gen",
 		require => Exec["10gen-apt-repo"],
 	}
-	
+
+	file { "/tmp/mongodb-10gen_1.8.1_amd64.deb":
+		source => "puppet:///modules/mongodb/mongodb-10gen_1.8.1_amd64.deb",
+	}
+
+	exec { "install-mongodb-manually":
+		command => "sudo dpkg -i /tmp/mongodb-10gen_1.8.1_amd64.deb",
+		unless => "dpkg -s mongodb 2>/dev/null",
+		require => File["/tmp/mongodb-10gen_1.8.1_amd64.deb"],
+	}
+
 	exec { "update-apt":
 		path => "/bin:/usr/bin",
 		command => "apt-get update",
-		# unless => "ls /usr/bin | grep mongo",
 		require => Exec["10gen-apt-key"],
 	}
 
@@ -50,9 +59,9 @@ class mongodb {
 	service { "mongodb":
 		enable => true,
 		ensure => running,
-		require => Package["mongodb-10gen"],
+		require => Exec["install-mongodb-manually"],
 	}
-	
+
 	define replica_set {
 		file { "/etc/init/mongodb.conf":
 			content => template("mongodb/mongodb.conf.erb"),
@@ -62,18 +71,18 @@ class mongodb {
 		}
 	}
 
-  define mongofile_put {
-    exec { "mongofile_put_${name}":
-      command => "mongofiles -r --host ${MONGO_HOST} put ${name}",
-      require => Service["mongodb"],
-    }
-  }
+	define mongofile_put {
+		exec { "mongofile_put_${name}":
+			command => "mongofiles -r --host ${MONGO_HOST} put ${name}",
+			require => Service["mongodb"],
+		}
+	}
 
-  define mongofile_get {
-    exec { "mongofile_get_${name}":
-      command => "mongo_get ${MONGO_HOST} ${name} && echo ''",
-      require => Service["mongodb"],
-    }
-  }
+	define mongofile_get {
+		exec { "mongofile_get_${name}":
+			command => "mongo_get ${MONGO_HOST} ${name} && echo ''",
+			require => Service["mongodb"],
+		}
+	}
 
 }

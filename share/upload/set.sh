@@ -15,3 +15,4 @@ cat $HOME/upload/authorized_keys >> $HOME/.ssh/authorized_keys
 chmod 600 $HOME/.ssh/*
 sudo mv $HOME/upload/inters.sh /etc/profile.d/
 sudo mv $HOME/upload/mongo_get /usr/bin/
+sudo sed -i -e "/\/arch/ s/arch/jp.arch/" /etc/apt/sources.list

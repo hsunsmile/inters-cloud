@@ -11,6 +11,6 @@ fi
 gembin_path=`gem env | grep "EXECUTABLE DIRECTORY" | awk '{print $4}'`
 
 no_puppetuser=`id puppet`
-[ -z "$no_puppetuser" ] && sudo $gembin_path/puppetmasterd --mkuser
+[ -z "$no_puppetuser" ] && sudo useradd -d /var/lib/puppet -s /bin/false puppet
 
 sudo $gembin_path/puppetd --test --verbose

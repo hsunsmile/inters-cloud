@@ -3,7 +3,7 @@ auto_domain="*.inters.com"
 
 gembin_path=`gem1.8 env | grep "EXECUTABLE DIRECTORY" | awk '{print $4}'`
 no_puppetuser=`id puppet`
-[ -z "$no_puppetuser" ] && sudo $gembin_path/puppetmasterd --mkuser
+[ -z "$no_puppetuser" ] && sudo useradd -d /var/lib/puppet -s /bin/false puppet
 [ ! -e /etc/puppet ] && sudo mkdir /etc/puppet
 [ ! -e /var/lib/puppet ] && sudo mkdir /var/lib/puppet
 [ ! -e /var/puppet ] && sudo mkdir /var/puppet
