@@ -1,26 +1,29 @@
+
+inters_home="$HOME/.mybin"
+inters_env="$inters_home/share/upload/inters.sh"
 source $inters_home/share/ec2-env.sh
 source $inters_home/share/settings.sh
 
 host_num=`ec2-describe-instances -F tag:Name=$hosttag_base* | grep "^TAG.*Name" | wc -l | grep -o "[0-9]\{1,10\}$"`
 if [ -z "$host_num" ]; then
-  host_num=1
+	host_num=1
 else
-  host_num=$(($host_num+1))
+	host_num=$(($host_num+1))
 fi
 [ ! -z "$1" ] && host_num=$1
 vpn_hostaddr=$(($host_num+1))
 
 pub_ip=`ec2-describe-addresses | awk '{print $2}'`
 if [ -z "$pub_ip" ]; then
-  pub_ip=`ec2-allocate-address | awk '{print $2}'`
-  echo "allocate new ip: $pub_ip"
+	pub_ip=`ec2-allocate-address | awk '{print $2}'`
+	echo "allocate new ip: $pub_ip"
 fi
 
 oldkey=`ec2-describe-keypairs $keypair | grep ^KEY`
 if [ -z "$oldkey" ]; then
-  ec2-add-keypair $keypair | tee $inters_home/share/$keypair
+	ec2-add-keypair $keypair | tee $inters_home/share/$keypair
 else
-  chmod 600 $inters_home/share/$keypair
+	chmod 600 $inters_home/share/$keypair
 fi
 
 sed -i -e "/^export MONGO_HOST/d" $inters_env
@@ -40,16 +43,16 @@ ec2-create-tags $instance_id -t LRM-Role=torque-slave
 inst_pubip=`ec2-describe-instances $instance_id | grep running | awk '{print $14}'`
 
 master_instid=`ec2-describe-instances -F tag:LRM-Role=torque-master | grep ^INS | awk '{print $2}'`
-if [ -z "$master_instid" ]; then
-  master_instid=$instance_id
-  if [ ! -z "$pub_ip" ]; then
-    echo "found master: $master_instid, $pub_ip "
-    ec2-associate-address $pub_ip -i $master_instid
-    inst_pubip=$pub_ip
-  fi
-  ec2-create-tags $master_instid -t ElasticIP=$pub_ip
-  ec2-create-tags $master_instid -t VPN-Role=vpn-master
-  ec2-create-tags $master_instid -t LRM-Role=torque-master
+[ -z "$master_instid" ] && master_instid=$instance_id
+ec2-create-tags $master_instid -t LRM-Role=torque-master
+ec2-create-tags $master_instid -t VPN-Role=vpn-master
+
+elastic_ip=`ec2-describe-tags | awk '/ElasticIP/ {print $5}'`
+if [ ! -z "$pub_ip" -a -z "$elastic_ip" ]; then
+	echo "found master: $master_instid, $pub_ip "
+	ec2-associate-address $pub_ip -i $master_instid
+	ec2-create-tags $master_instid -t ElasticIP=$pub_ip
+	inst_pubip=$pub_ip
 fi
 
 
@@ -57,10 +60,10 @@ sshport_ok=`ec2-describe-group $group | awk '{print $5","$6","$7}' | grep "^tcp,
 [ -z "$sshport_ok" ] && ec2-authorize $group -P tcp -p 22
 
 if [ ! -e $ssh_config ]; then 
-  cat <<EOF > $ssh_config
-  user ubuntu
-  StrictHostKeyChecking no
-  identityFile $inters_home/share/$keypair
+	cat <<EOF > $ssh_config
+	user ubuntu
+	StrictHostKeyChecking no
+	identityFile $inters_home/share/$keypair
 EOF
 fi
 
@@ -93,4 +96,3 @@ tincport_ok=`ec2-describe-group $group | awk '{print $5","$6","$7}' | grep "^tcp
 puppet_role="client"
 [ $host_num -eq 1 ] && puppet_role="master"
 ssh -F ~/.ssh/config_inters "$hosttag_base$host_num" sudo ./upload/puppet/00_install-puppet.sh $puppet_role
-
