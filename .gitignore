@@ -1,3 +1,5 @@
 *.pri
+*/*deb
+*/*gem
 temp
 *-e
