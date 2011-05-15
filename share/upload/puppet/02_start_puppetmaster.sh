@@ -1,7 +1,11 @@
 # puppetmasterd --debug --verbose --no-daemonize
-auto_domain="*.inters.com"
+auto_domain=`hostname -d`
+[ -z "$auto_domain" ] && auto_domain="*.inters.com"
+base_dir=`dirname $0`
 
 gembin_path=`gem1.8 env | grep "EXECUTABLE DIRECTORY" | awk '{print $4}'`
+[ ! -e /etc/profile.d/gem.sh ] && echo "PATH=\$PATH:$gembin_path" | tee -a /etc/profile.d/gem.sh
+
 no_puppetuser=`id puppet`
 [ -z "$no_puppetuser" ] && sudo useradd -d /var/lib/puppet -s /bin/false puppet
 [ ! -e /etc/puppet ] && sudo mkdir /etc/puppet
@@ -16,7 +20,9 @@ cat <<EOF > autosign.conf
 $auto_domain
 EOF
 sudo mv autosign.conf /etc/puppet/
-sudo cp -pr $HOME/upload/puppet/namespaceauth.conf /etc/puppet/
-sudo cp -pr $HOME/upload/puppet/modules /etc/puppet/
-sudo cp -pr $HOME/upload/puppet/manifests /etc/puppet/
-[ -z "`ps aux | grep [p]uppetmasterd`" ] && sudo $gembin_path/puppetmasterd
+sudo cp -pr $base_dir/namespaceauth.conf /etc/puppet/
+sudo cp -pr $base_dir/modules /etc/puppet/
+sudo cp -pr $base_dir/manifests /etc/puppet/
+pgrep puppetmasterd | xargs kill -9
+# [ -z "`ps aux | grep [p]uppetmasterd`" ] && sudo $gembin_path/puppetmasterd
+sudo $gembin_path/puppetmasterd

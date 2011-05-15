@@ -1,6 +1,7 @@
 
 inters_home="$HOME/.mybin"
 inters_env="$inters_home/share/upload/inters.sh"
+inters_cron="$inters_home/share/upload/inters_crontab"
 source $inters_home/share/ec2-env.sh
 source $inters_home/share/settings.sh
 
@@ -28,6 +29,10 @@ fi
 
 sed -i -e "/^export MONGO_HOST/d" $inters_env
 echo "export MONGO_HOST=$pub_ip" | tee -a $inters_env
+
+sed -i -e "/^MONGO_HOST/d" $inters_cron
+echo "MONGO_HOST=$pub_ip" | tee -a $inters_cron
+echo "* * * * * sudo mongo_get $MONGO_HOST" | tee -a $inters_cron
 
 sed -i -e "/MONGO_HOST/d" $inters_home/share/upload/puppet/manifests/site.pp
 sed -i -e "4i\\
