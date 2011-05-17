@@ -1,0 +1,15 @@
+[submodule "3rdparty/jclouds"]
+	path = 3rdparty/jclouds
+	url = https://github.com/jclouds/jclouds.git
+[submodule "share/upload/puppet/modules/bridge-utils"]
+	path = share/upload/puppet/modules/bridge-utils
+	url = https://github.com/duritong/puppet-bridge-utils.git
+[submodule "share/upload/puppet/modules/common"]
+	path = share/upload/puppet/modules/common
+	url = https://github.com/duritong/puppet-common.git
+[submodule "share/upload/puppet/modules/mongodb"]
+	path = share/upload/puppet/modules/mongodb
+	url = git@github.com:xsunsmile/puppet-mongodb.git
+[submodule "share/upload/puppet/modules/tinc"]
+	path = share/upload/puppet/modules/tinc
+	url = git@github.com:xsunsmile/puppet-tinc.git
