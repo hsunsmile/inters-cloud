@@ -1,11 +1,14 @@
 import "modules.pp"
 
 Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
-$MONGO_HOST='175.41.241.221'
+$MONGO_HOST='46.51.253.99'
+
+node default {}
 
 node inters {
 	include 'tinc'
 	include 'mongodb'
+	include 'torque'
 
 	package { mailutils: ensure => installed }
 

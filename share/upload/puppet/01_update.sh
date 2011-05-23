@@ -8,7 +8,7 @@ fi
 # [ -e /etc/puppet/ssl ] && sudo rm -rf /etc/puppet/ssl
 [ -e /etc/tinc ] && sudo chmod -R 777 /etc/tinc
 
-gembin_path=`gem env | grep "EXECUTABLE DIRECTORY" | awk '{print $4}'`
+gembin_path=`gem1.8 env | grep "EXECUTABLE DIRECTORY" | awk '{print $4}'`
 
 no_puppetuser=`id puppet`
 [ -z "$no_puppetuser" ] && sudo useradd -d /var/lib/puppet -s /bin/false puppet

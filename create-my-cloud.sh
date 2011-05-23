@@ -30,14 +30,20 @@ fi
 sed -i -e "/^export MONGO_HOST/d" $inters_env
 echo "export MONGO_HOST=$pub_ip" | tee -a $inters_env
 
+rm $inters_cron && touch $inters_cron
 sed -i -e "/^MONGO_HOST/d" $inters_cron
 echo "MONGO_HOST=$pub_ip" | tee -a $inters_cron
-echo "* * * * * sudo mongo_get $MONGO_HOST" | tee -a $inters_cron
+echo "* * * * * sudo mongo_get $pub_ip /etc/tinc" | tee -a $inters_cron
 
 sed -i -e "/MONGO_HOST/d" $inters_home/share/upload/puppet/manifests/site.pp
 sed -i -e "4i\\
 \$MONGO_HOST='$pub_ip'
 " $inters_home/share/upload/puppet/manifests/site.pp
+
+sed -i -e "/MONGO_HOST/d" $inters_home/share/upload/puppet/modules/mongodb/manifests/init.pp
+sed -i -e "17i\\
+\$mongo_host='$pub_ip'
+" $inters_home/share/upload/puppet/modules/mongodb/manifests/init.pp
 
 instance_id=`ec2-run-instances $ami_id -t $inst_type -k $keypair | grep ^INS | awk '{print $2}'`
 echo "allocate new instance: $instance_id"

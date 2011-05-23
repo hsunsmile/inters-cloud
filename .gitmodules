@@ -16,3 +16,6 @@
 [submodule "3rdparty/torque"]
 	path = 3rdparty/torque
 	url = git@github.com:xsunsmile/lrm-torque-clone.git
+[submodule "share/upload/puppet/modules/torque"]
+	path = share/upload/puppet/modules/torque
+	url = git@github.com:xsunsmile/puppet-torque.git

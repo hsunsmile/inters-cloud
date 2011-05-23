@@ -1,0 +1,14 @@
+
+desc "create module skelton"
+task :create_module, :module_name do |t, args|
+   module_name = args[:module_name]
+   puts "create module: #{module_name}"
+   module_base = "modules/#{module_name}"
+   mkdir module_base unless File.exists?(module_base)
+   %w[ files manifests templates ].each do |dir|
+       mkdir "#{module_base}/#{dir}" unless File.exists?("#{module_base}/#{dir}")
+   end
+   File.open("#{module_base}/README",'w').puts "module #{module_name} created by Rake"
+   File.open("#{module_base}/manifests/init.pp",'w').puts ""
+end
+
