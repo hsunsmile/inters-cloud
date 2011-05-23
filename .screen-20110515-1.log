@@ -1,0 +1,13 @@
+^HLast login: Sun May 15 12:01:45 2011 from 136.187.47.5
+^Hxsun@kuruwa-gw:~$ ls
+[0m[01;34mDesktop[0m  [01;32mattach-vol.sh[0m  [01;32mcreate-large-node.sh[0m  [01;34minters[0m          kuruwa-data-io           [01;36mnlp[0m               spot.data  [01;32mupload-image-large.sh[0m  [01;36mworking[0m
+[01;34mMail[0m     [01;36mcapfile[0m        [01;32mdownload-bundle.sh[0m    [01;34minters-ec2[0m      [01;34mng-5.1.0[0m                 [01;32mrun.sh[0m            test       [01;32mupload-image-small.sh[0m
+[01;34mSIM[0m      capfile.rb     [01;32mec2-spot-status.sh[0m    [01;31minters-ec2.tgz[0m  [01;34mnimbus-2.6-src[0m           [01;34mscheduler[0m         [01;32mtest.sh[0m    upload-image.log
+[01;34mSV[0m       [01;34mconf-repo[0m      [01;34mgridway_5.6.1[0m         inters.memo     [01;34mnimbus-cloud-client-017[0m  spot-histroy.log  [01;34mtmp[0m        [01;32mupload-image.sh[0m
+[mxsun@kuruwa-gw:~$ clear
+[H[Jxsun@kuruwa-gw:~$ ls
+[0m[01;34mDesktop[0m  [01;32mattach-vol.sh[0m  [01;32mcreate-large-node.sh[0m  [01;34minters[0m          kuruwa-data-io           [01;36mnlp[0m               spot.data  [01;32mupload-image-large.sh[0m  [01;36mworking[0m
+[01;34mMail[0m     [01;36mcapfile[0m        [01;32mdownload-bundle.sh[0m    [01;34minters-ec2[0m      [01;34mng-5.1.0[0m                 [01;32mrun.sh[0m            test       [01;32mupload-image-small.sh[0m
+[01;34mSIM[0m      capfile.rb     [01;32mec2-spot-status.sh[0m    [01;31minters-ec2.tgz[0m  [01;34mnimbus-2.6-src[0m           [01;34mscheduler[0m         [01;32mtest.sh[0m    upload-image.log
+[01;34mSV[0m       [01;34mconf-repo[0m      [01;34mgridway_5.6.1[0m         inters.memo     [01;34mnimbus-cloud-client-017[0m  spot-histroy.log  [01;34mtmp[0m        [01;32mupload-image.sh[0m
+[mxsun@kuruwa-gw:~$ Timeout, server not responding.

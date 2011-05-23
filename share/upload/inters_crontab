@@ -1,0 +1,2 @@
+MONGO_HOST=175.41.241.221
+* * * * * sudo mongo_get 

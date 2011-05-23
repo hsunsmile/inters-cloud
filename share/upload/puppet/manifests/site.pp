@@ -1,7 +1,7 @@
 import "modules.pp"
 
 Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
-$MONGO_HOST='46.51.252.65'
+$MONGO_HOST='175.41.241.221'
 
 node inters {
 	include 'tinc'

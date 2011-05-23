@@ -13,3 +13,6 @@
 [submodule "share/upload/puppet/modules/tinc"]
 	path = share/upload/puppet/modules/tinc
 	url = git@github.com:xsunsmile/puppet-tinc.git
+[submodule "3rdparty/torque"]
+	path = 3rdparty/torque
+	url = git@github.com:xsunsmile/lrm-torque-clone.git

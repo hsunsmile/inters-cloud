@@ -1,0 +1,10 @@
+bash-3.2$ ls
+README			create-my-cloud.sh	share			stop-my-cloud.sh	temp
+bash-3.2$ ls temp/
+blueprint	puppetd.rb
+bash-3.2$ ls
+README			create-my-cloud.sh	share			stop-my-cloud.sh	temp
+bash-3.2$ clear
+[H[Jbash-3.2$ ls
+README			create-my-cloud.sh	share			stop-my-cloud.sh	temp
+bash-3.2$ exit
